@@ -216,39 +216,19 @@ export default function Home() {
     });
   }, [grid, gameMode]);
 
-  // Touch/Mouse controls for mobile
-  const [isDragging, setIsDragging] = useState(false);
-  const [dragStart, setDragStart] = useState<{ x: number; y: number } | null>(null);
-  const dragThreshold = 30; // pixels to trigger movement
-
-  const handleDragStart = useCallback((clientX: number, clientY: number) => {
+  // Mobile touch controls - click on cell to move there
+  const handleCellClick = useCallback((targetX: number, targetY: number) => {
     if (gameMode !== 'shopping' && gameMode !== 'checkout') return;
-    setIsDragging(true);
-    setDragStart({ x: clientX, y: clientY });
-  }, [gameMode]);
-
-  const handleDragMove = useCallback((clientX: number, clientY: number) => {
-    if (!isDragging || !dragStart) return;
-
-    const dx = clientX - dragStart.x;
-    const dy = clientY - dragStart.y;
-
-    // Check if movement exceeds threshold
-    if (Math.abs(dx) > dragThreshold || Math.abs(dy) > dragThreshold) {
-      // Determine primary direction
-      if (Math.abs(dx) > Math.abs(dy)) {
-        movePlayer(dx > 0 ? 1 : -1, 0);
-      } else {
-        movePlayer(0, dy > 0 ? 1 : -1);
-      }
-      setDragStart({ x: clientX, y: clientY });
+    
+    // Check if it's an adjacent cell
+    const dx = targetX - playerPosition.x;
+    const dy = targetY - playerPosition.y;
+    
+    // Only allow movement to adjacent cells
+    if (Math.abs(dx) + Math.abs(dy) === 1) {
+      movePlayer(dx, dy);
     }
-  }, [isDragging, dragStart, movePlayer]);
-
-  const handleDragEnd = useCallback(() => {
-    setIsDragging(false);
-    setDragStart(null);
-  }, []);
+  }, [gameMode, playerPosition, movePlayer]);
 
   // Keyboard controls
   useEffect(() => {
@@ -310,7 +290,7 @@ export default function Home() {
   const currentTarget = shoppingList[currentTargetIndex];
 
   return (
-    <div className="min-h-screen bg-gray-900 text-white p-2 sm:p-4">
+    <div className="min-h-screen bg-gray-900 text-white p-2 sm:p-4 pb-20 sm:pb-4">
       {/* Instagram Follow Popup */}
       <InstagramFollowPopup 
         show={showInstagramPopup} 
@@ -318,8 +298,8 @@ export default function Home() {
       />
       
       <div className="max-w-7xl mx-auto">
-        <header className="text-center mb-4 sm:mb-6">
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-1 sm:mb-2">🛒 SuperMercat Inclusiu</h1>
+        <header className="text-center mb-3 sm:mb-6">
+          <h1 className="text-xl sm:text-3xl md:text-4xl font-bold mb-1 sm:mb-2">🛒 SuperMercat Inclusiu</h1>
           <p className="text-xs sm:text-sm text-gray-400">Sistema de navegación asistida por voz</p>
         </header>
 
@@ -472,29 +452,15 @@ export default function Home() {
                   <li className="hidden sm:block">⬅️ Izquierda: ← o A</li>
                   <li className="hidden sm:block">➡️ Derecha: → o D</li>
                   <li className="sm:hidden">⌨️ Usa flechas o WASD</li>
-                  <li className="lg:hidden">📱 Arrastra para moverte</li>
+                  <li className="lg:hidden">🎮 Usa el control flotante</li>
+                  <li className="lg:hidden">👆 Toca celdas adyacentes</li>
                 </ul>
               </div>
             )}
           </div>
 
           {/* Game Grid */}
-          <div 
-            className="lg:col-span-2 order-1 lg:order-2"
-            onMouseDown={(e) => handleDragStart(e.clientX, e.clientY)}
-            onMouseMove={(e) => handleDragMove(e.clientX, e.clientY)}
-            onMouseUp={handleDragEnd}
-            onMouseLeave={handleDragEnd}
-            onTouchStart={(e) => {
-              const touch = e.touches[0];
-              handleDragStart(touch.clientX, touch.clientY);
-            }}
-            onTouchMove={(e) => {
-              const touch = e.touches[0];
-              handleDragMove(touch.clientX, touch.clientY);
-            }}
-            onTouchEnd={handleDragEnd}
-          >
+          <div className="lg:col-span-2 order-1 lg:order-2">
             <SupermarketGrid
               grid={grid}
               playerPosition={playerPosition}
@@ -507,7 +473,50 @@ export default function Home() {
               }
               path={path}
               collectedProducts={collectedProducts}
+              onCellClick={handleCellClick}
             />
+            
+            {/* Mobile D-Pad Controls */}
+            {(gameMode === 'shopping' || gameMode === 'checkout') && (
+              <div className="lg:hidden fixed bottom-4 right-4 z-40">
+                <div className="relative w-32 h-32 bg-gray-800 bg-opacity-90 rounded-full shadow-2xl">
+                  {/* Up */}
+                  <button
+                    onClick={() => movePlayer(0, -1)}
+                    className="absolute top-0 left-1/2 -translate-x-1/2 w-12 h-12 bg-blue-600 hover:bg-blue-700 active:bg-blue-800 rounded-full flex items-center justify-center text-xl font-bold shadow-lg"
+                  >
+                    ↑
+                  </button>
+                  
+                  {/* Down */}
+                  <button
+                    onClick={() => movePlayer(0, 1)}
+                    className="absolute bottom-0 left-1/2 -translate-x-1/2 w-12 h-12 bg-blue-600 hover:bg-blue-700 active:bg-blue-800 rounded-full flex items-center justify-center text-xl font-bold shadow-lg"
+                  >
+                    ↓
+                  </button>
+                  
+                  {/* Left */}
+                  <button
+                    onClick={() => movePlayer(-1, 0)}
+                    className="absolute left-0 top-1/2 -translate-y-1/2 w-12 h-12 bg-blue-600 hover:bg-blue-700 active:bg-blue-800 rounded-full flex items-center justify-center text-xl font-bold shadow-lg"
+                  >
+                    ←
+                  </button>
+                  
+                  {/* Right */}
+                  <button
+                    onClick={() => movePlayer(1, 0)}
+                    className="absolute right-0 top-1/2 -translate-y-1/2 w-12 h-12 bg-blue-600 hover:bg-blue-700 active:bg-blue-800 rounded-full flex items-center justify-center text-xl font-bold shadow-lg"
+                  >
+                    →
+                  </button>
+                  
+                  {/* Center dot */}
+                  <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-8 h-8 bg-gray-700 rounded-full"></div>
+                </div>
+              </div>
+            )}
           </div>
         </div>
       </div>

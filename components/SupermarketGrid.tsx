@@ -9,6 +9,7 @@ interface SupermarketGridProps {
   targetPosition: Position | null;
   path: Position[] | null;
   collectedProducts: Set<string>;
+  onCellClick?: (x: number, y: number) => void;
 }
 
 export function SupermarketGrid({ 
@@ -16,9 +17,9 @@ export function SupermarketGrid({
   playerPosition, 
   targetPosition,
   path,
-  collectedProducts 
+  collectedProducts,
+  onCellClick
 }: SupermarketGridProps) {
-  const [touchStart, setTouchStart] = useState<{ x: number; y: number } | null>(null);
 
   const isOnPath = (x: number, y: number): boolean => {
     if (!path) return false;
@@ -81,27 +82,37 @@ export function SupermarketGrid({
 
   return (
     <div className="flex flex-col items-center justify-center p-2 sm:p-4 bg-gray-900 rounded-lg select-none w-full">
-      <div className="inline-grid gap-[1px] sm:gap-[2px] bg-gray-800 p-1 sm:p-2 rounded cursor-grab active:cursor-grabbing overflow-x-auto max-w-full">
+      <div className="inline-grid gap-[1px] sm:gap-[2px] bg-gray-800 p-1 sm:p-2 rounded overflow-x-auto max-w-full">
         {grid.map((row, y) => (
           <div key={y} className="flex gap-[1px] sm:gap-[2px]">
-            {row.map((cell, x) => (
-              <div
-                key={`${x}-${y}`}
-                className={`
-                  w-5 h-5 xs:w-6 xs:h-6 sm:w-8 sm:h-8 md:w-10 md:h-10 lg:w-12 lg:h-12
-                  flex items-center justify-center
-                  text-[8px] xs:text-[10px] sm:text-xs md:text-sm font-bold
-                  transition-colors duration-200
-                  ${getCellColor(cell, x, y)}
-                  ${cell.type === 'wall' ? 'border border-gray-900' : ''}
-                `}
-                title={cell.product?.name || cell.type}
-              >
-                <span className="select-none leading-none">
-                  {getCellContent(cell, x, y)}
-                </span>
-              </div>
-            ))}
+            {row.map((cell, x) => {
+              // Check if cell is adjacent to player
+              const dx = Math.abs(x - playerPosition.x);
+              const dy = Math.abs(y - playerPosition.y);
+              const isAdjacent = dx + dy === 1;
+              const isClickable = isAdjacent && cell.type !== 'wall' && cell.type !== 'aisle';
+              
+              return (
+                <div
+                  key={`${x}-${y}`}
+                  onClick={() => onCellClick && onCellClick(x, y)}
+                  className={`
+                    w-5 h-5 xs:w-6 xs:h-6 sm:w-8 sm:h-8 md:w-10 md:h-10 lg:w-12 lg:h-12
+                    flex items-center justify-center
+                    text-[8px] xs:text-[10px] sm:text-xs md:text-sm font-bold
+                    transition-all duration-200
+                    ${getCellColor(cell, x, y)}
+                    ${cell.type === 'wall' ? 'border border-gray-900' : ''}
+                    ${isClickable ? 'lg:hover:ring-2 lg:hover:ring-blue-400 cursor-pointer active:scale-95' : ''}
+                  `}
+                  title={cell.product?.name || cell.type}
+                >
+                  <span className="select-none leading-none pointer-events-none">
+                    {getCellContent(cell, x, y)}
+                  </span>
+                </div>
+              );
+            })}
           </div>
         ))}
       </div>
