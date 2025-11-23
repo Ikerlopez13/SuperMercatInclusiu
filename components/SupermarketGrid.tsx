@@ -81,10 +81,10 @@ export function SupermarketGrid({
   };
 
   return (
-    <div className="flex flex-col items-center justify-center p-2 sm:p-4 bg-gray-900 rounded-lg select-none w-full">
-      <div className="inline-grid gap-[1px] sm:gap-[2px] bg-gray-800 p-1 sm:p-2 rounded overflow-x-auto max-w-full">
+    <div className="flex flex-col items-center justify-center p-1 sm:p-2 md:p-4 bg-gray-900 rounded-lg select-none w-full">
+      <div className="inline-grid gap-[0.5px] sm:gap-[1px] bg-gray-800 p-[2px] sm:p-1 md:p-2 rounded overflow-x-auto max-w-full">
         {grid.map((row, y) => (
-          <div key={y} className="flex gap-[1px] sm:gap-[2px]">
+          <div key={y} className="flex gap-[0.5px] sm:gap-[1px]">
             {row.map((cell, x) => {
               // Check if cell is adjacent to player
               const dx = Math.abs(x - playerPosition.x);
@@ -97,9 +97,9 @@ export function SupermarketGrid({
                   key={`${x}-${y}`}
                   onClick={() => onCellClick && onCellClick(x, y)}
                   className={`
-                    w-5 h-5 xs:w-6 xs:h-6 sm:w-8 sm:h-8 md:w-10 md:h-10 lg:w-12 lg:h-12
+                    w-4 h-4 sm:w-7 sm:h-7 md:w-9 md:h-9 lg:w-11 lg:h-11
                     flex items-center justify-center
-                    text-[8px] xs:text-[10px] sm:text-xs md:text-sm font-bold
+                    text-[7px] sm:text-[10px] md:text-xs lg:text-sm font-bold
                     transition-all duration-200
                     ${getCellColor(cell, x, y)}
                     ${cell.type === 'wall' ? 'border border-gray-900' : ''}
@@ -118,36 +118,36 @@ export function SupermarketGrid({
       </div>
       
       {/* Legend */}
-      <div className="mt-3 sm:mt-4 p-3 sm:p-4 bg-gray-800 rounded-lg text-white text-xs sm:text-sm w-full max-w-2xl">
-        <h3 className="font-bold mb-2 text-sm sm:text-base">Leyenda:</h3>
-        <div className="grid grid-cols-2 sm:grid-cols-3 gap-1.5 sm:gap-2">
-          <div className="flex items-center gap-1.5 sm:gap-2">
-            <div className="w-5 h-5 sm:w-6 sm:h-6 bg-blue-500 rounded flex-shrink-0"></div>
-            <span className="text-xs sm:text-sm">Tú</span>
+      <div className="mt-2 sm:mt-3 p-2 sm:p-3 bg-gray-800 rounded-lg text-white text-xs w-full max-w-2xl">
+        <h3 className="font-bold mb-1.5 sm:mb-2 text-xs sm:text-sm">Leyenda:</h3>
+        <div className="grid grid-cols-2 sm:grid-cols-3 gap-1 sm:gap-1.5">
+          <div className="flex items-center gap-1 sm:gap-1.5">
+            <div className="w-4 h-4 sm:w-5 sm:h-5 bg-blue-500 rounded flex-shrink-0"></div>
+            <span className="text-[10px] sm:text-xs">Tú</span>
           </div>
-          <div className="flex items-center gap-1.5 sm:gap-2">
-            <div className="w-5 h-5 sm:w-6 sm:h-6 bg-red-500 rounded flex items-center justify-center text-xs flex-shrink-0">📦</div>
-            <span className="text-xs sm:text-sm">Producto</span>
+          <div className="flex items-center gap-1 sm:gap-1.5">
+            <div className="w-4 h-4 sm:w-5 sm:h-5 bg-red-500 rounded flex items-center justify-center text-[10px] flex-shrink-0">📦</div>
+            <span className="text-[10px] sm:text-xs">Producto</span>
           </div>
-          <div className="flex items-center gap-1.5 sm:gap-2">
-            <div className="w-5 h-5 sm:w-6 sm:h-6 bg-yellow-400 rounded flex items-center justify-center text-xs flex-shrink-0">🎯</div>
-            <span className="text-xs sm:text-sm">Objetivo</span>
+          <div className="flex items-center gap-1 sm:gap-1.5">
+            <div className="w-4 h-4 sm:w-5 sm:h-5 bg-yellow-400 rounded flex items-center justify-center text-[10px] flex-shrink-0">🎯</div>
+            <span className="text-[10px] sm:text-xs">Objetivo</span>
           </div>
-          <div className="flex items-center gap-1.5 sm:gap-2">
-            <div className="w-5 h-5 sm:w-6 sm:h-6 bg-green-300 rounded flex-shrink-0"></div>
-            <span className="text-xs sm:text-sm">Ruta</span>
+          <div className="flex items-center gap-1 sm:gap-1.5">
+            <div className="w-4 h-4 sm:w-5 sm:h-5 bg-green-300 rounded flex-shrink-0"></div>
+            <span className="text-[10px] sm:text-xs">Ruta</span>
           </div>
-          <div className="flex items-center gap-1.5 sm:gap-2">
-            <div className="w-5 h-5 sm:w-6 sm:h-6 bg-gray-700 rounded flex-shrink-0"></div>
-            <span className="text-xs sm:text-sm">Pared</span>
+          <div className="flex items-center gap-1 sm:gap-1.5">
+            <div className="w-4 h-4 sm:w-5 sm:h-5 bg-gray-700 rounded flex-shrink-0"></div>
+            <span className="text-[10px] sm:text-xs">Pared</span>
           </div>
-          <div className="flex items-center gap-1.5 sm:gap-2">
-            <div className="w-5 h-5 sm:w-6 sm:h-6 bg-amber-700 border border-amber-900 rounded flex items-center justify-center text-[8px] sm:text-xs text-white flex-shrink-0">1</div>
-            <span className="text-xs sm:text-sm">Estantería</span>
+          <div className="flex items-center gap-1 sm:gap-1.5">
+            <div className="w-4 h-4 sm:w-5 sm:h-5 bg-amber-700 border border-amber-900 rounded flex items-center justify-center text-[7px] sm:text-[9px] text-white flex-shrink-0">1</div>
+            <span className="text-[10px] sm:text-xs">Estante</span>
           </div>
-          <div className="flex items-center gap-1.5 sm:gap-2">
-            <div className="w-5 h-5 sm:w-6 sm:h-6 bg-green-600 rounded flex items-center justify-center text-xs flex-shrink-0">💰</div>
-            <span className="text-xs sm:text-sm">Caja</span>
+          <div className="flex items-center gap-1 sm:gap-1.5">
+            <div className="w-4 h-4 sm:w-5 sm:h-5 bg-green-600 rounded flex items-center justify-center text-[10px] flex-shrink-0">💰</div>
+            <span className="text-[10px] sm:text-xs">Caja</span>
           </div>
         </div>
       </div>

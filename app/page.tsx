@@ -290,7 +290,7 @@ export default function Home() {
   const currentTarget = shoppingList[currentTargetIndex];
 
   return (
-    <div className="min-h-screen bg-gray-900 text-white p-2 sm:p-4 pb-20 sm:pb-4">
+    <div className="min-h-screen bg-gray-900 text-white p-1 sm:p-3 md:p-4 pb-20 sm:pb-4">
       {/* Instagram Follow Popup */}
       <InstagramFollowPopup 
         show={showInstagramPopup} 
@@ -298,26 +298,26 @@ export default function Home() {
       />
       
       <div className="max-w-7xl mx-auto">
-        <header className="text-center mb-3 sm:mb-6">
-          <h1 className="text-xl sm:text-3xl md:text-4xl font-bold mb-1 sm:mb-2">🛒 SuperMercat Inclusiu</h1>
-          <p className="text-xs sm:text-sm text-gray-400">Sistema de navegación asistida por voz</p>
+        <header className="text-center mb-2 sm:mb-4 md:mb-6">
+          <h1 className="text-lg sm:text-2xl md:text-3xl lg:text-4xl font-bold mb-0.5 sm:mb-1 md:mb-2">🛒 SuperMercat Inclusiu</h1>
+          <p className="text-[10px] sm:text-xs md:text-sm text-gray-400">Sistema de navegación asistida por voz</p>
         </header>
 
-        <div className="flex flex-col lg:grid lg:grid-cols-3 gap-3 sm:gap-4 lg:gap-6">
+        <div className="flex flex-col lg:grid lg:grid-cols-3 gap-2 sm:gap-3 lg:gap-5">
           {/* Control Panel */}
-          <div className="lg:col-span-1 space-y-3 sm:space-y-4 order-2 lg:order-1">
+          <div className="lg:col-span-1 space-y-2 sm:space-y-3 order-2 lg:order-1">
             {/* Voice Recognition Status */}
-            <div className="bg-gray-800 p-3 sm:p-4 rounded-lg">
-              <h2 className="text-lg sm:text-xl font-bold mb-2 sm:mb-3">🎤 Control de Voz</h2>
+            <div className="bg-gray-800 p-2 sm:p-3 rounded-lg">
+              <h2 className="text-base sm:text-lg font-bold mb-1.5 sm:mb-2">🎤 Control de Voz</h2>
               
               {!speechRecognitionSupported && (
-                <div className="bg-red-900 p-2 sm:p-3 rounded mb-2 sm:mb-3 text-xs sm:text-sm">
+                <div className="bg-red-900 p-1.5 sm:p-2 rounded mb-1.5 sm:mb-2 text-[10px] sm:text-xs">
                   ⚠️ Reconocimiento de voz no soportado
                 </div>
               )}
 
               {!speechSynthesisSupported && (
-                <div className="bg-red-900 p-2 sm:p-3 rounded mb-2 sm:mb-3 text-xs sm:text-sm">
+                <div className="bg-red-900 p-1.5 sm:p-2 rounded mb-1.5 sm:mb-2 text-[10px] sm:text-xs">
                   ⚠️ Síntesis de voz no soportada
                 </div>
               )}
@@ -327,7 +327,7 @@ export default function Home() {
                   <button
                     onClick={isListening ? stopListening : startListening}
                     disabled={!speechRecognitionSupported}
-                    className={`w-full py-2.5 sm:py-3 px-3 sm:px-4 rounded-lg text-sm sm:text-base font-bold transition ${
+                    className={`w-full py-2 sm:py-2.5 px-2 sm:px-3 rounded-lg text-xs sm:text-sm font-bold transition ${
                       isListening
                         ? 'bg-red-600 hover:bg-red-700'
                         : 'bg-green-600 hover:bg-green-700'
@@ -337,15 +337,15 @@ export default function Home() {
                   </button>
 
                   {transcript && (
-                    <div className="mt-2 sm:mt-3 p-2 sm:p-3 bg-gray-700 rounded">
-                      <p className="text-xs sm:text-sm text-gray-300">Escuchando:</p>
-                      <p className="text-sm sm:text-base text-white">{transcript}</p>
+                    <div className="mt-1.5 sm:mt-2 p-1.5 sm:p-2 bg-gray-700 rounded">
+                      <p className="text-[10px] sm:text-xs text-gray-300">Escuchando:</p>
+                      <p className="text-xs sm:text-sm text-white">{transcript}</p>
                     </div>
                   )}
 
-                  <div className="mt-2 sm:mt-3 p-2 sm:p-3 bg-blue-900 rounded text-xs sm:text-sm">
+                  <div className="mt-1.5 sm:mt-2 p-1.5 sm:p-2 bg-blue-900 rounded text-[10px] sm:text-xs">
                     <p><strong>Productos disponibles:</strong></p>
-                    <p className="text-gray-300 mt-1">
+                    <p className="text-gray-300 mt-0.5">
                       {PRODUCT_NAMES.slice(0, 4).map(p => p.name).join(', ')}...
                     </p>
                   </div>
@@ -356,7 +356,7 @@ export default function Home() {
                 <button
                   onClick={provideDirections}
                   disabled={isSpeaking}
-                  className="w-full py-2.5 sm:py-3 px-3 sm:px-4 rounded-lg text-sm sm:text-base font-bold bg-blue-600 hover:bg-blue-700 disabled:bg-gray-600"
+                  className="w-full py-2 sm:py-2.5 px-2 sm:px-3 rounded-lg text-xs sm:text-sm font-bold bg-blue-600 hover:bg-blue-700 disabled:bg-gray-600"
                 >
                   🗣️ Repetir Direcciones
                 </button>
@@ -364,19 +364,19 @@ export default function Home() {
             </div>
 
             {/* Shopping List */}
-            <div className="bg-gray-800 p-3 sm:p-4 rounded-lg">
-              <h2 className="text-lg sm:text-xl font-bold mb-2 sm:mb-3">📝 Lista de Compra</h2>
+            <div className="bg-gray-800 p-2 sm:p-3 rounded-lg">
+              <h2 className="text-base sm:text-lg font-bold mb-1.5 sm:mb-2">📝 Lista de Compra</h2>
               
               {shoppingList.length === 0 ? (
-                <p className="text-gray-400 text-xs sm:text-sm">
+                <p className="text-gray-400 text-[10px] sm:text-xs">
                   Usa el control de voz para añadir productos
                 </p>
               ) : (
-                <ul className="space-y-1.5 sm:space-y-2">
+                <ul className="space-y-1 sm:space-y-1.5">
                   {shoppingList.map((item, index) => (
                     <li
                       key={item.product.id}
-                      className={`p-2 sm:p-2.5 rounded flex items-center justify-between text-xs sm:text-sm ${
+                      className={`p-1.5 sm:p-2 rounded flex items-center justify-between text-[10px] sm:text-xs ${
                         item.collected
                           ? 'bg-green-900 line-through'
                           : index === currentTargetIndex && gameMode === 'shopping'
@@ -386,14 +386,14 @@ export default function Home() {
                     >
                       <span className="flex-1 min-w-0">
                         {item.collected ? '✅' : '📦'} {item.product.name}
-                        <span className="text-[10px] sm:text-xs text-gray-400 ml-1 sm:ml-2 block sm:inline">
+                        <span className="text-[9px] sm:text-[10px] text-gray-400 ml-1 block sm:inline">
                           Pasillo {item.product.aisle} - {item.product.price.toFixed(2)}€
                         </span>
                       </span>
                       {!item.collected && gameMode === 'setup' && (
                         <button
                           onClick={() => removeProduct(item.product.id)}
-                          className="text-red-400 hover:text-red-300 ml-2 flex-shrink-0"
+                          className="text-red-400 hover:text-red-300 ml-1 flex-shrink-0 text-sm"
                         >
                           ❌
                         </button>
@@ -406,7 +406,7 @@ export default function Home() {
               {gameMode === 'setup' && shoppingList.length > 0 && (
                 <button
                   onClick={startShopping}
-                  className="w-full mt-3 sm:mt-4 py-2.5 sm:py-3 px-3 sm:px-4 rounded-lg text-sm sm:text-base font-bold bg-green-600 hover:bg-green-700"
+                  className="w-full mt-2 sm:mt-3 py-2 sm:py-2.5 px-2 sm:px-3 rounded-lg text-xs sm:text-sm font-bold bg-green-600 hover:bg-green-700"
                 >
                   🚀 Comenzar Compra
                 </button>
@@ -415,13 +415,13 @@ export default function Home() {
 
             {/* Current Navigation */}
             {gameMode === 'shopping' && currentTarget && !currentTarget.collected && (
-              <div className="bg-yellow-900 p-3 sm:p-4 rounded-lg">
-                <h3 className="text-sm sm:text-base font-bold mb-1.5 sm:mb-2">🎯 Objetivo Actual:</h3>
-                <p className="text-base sm:text-lg">{currentTarget.product.name}</p>
-                <p className="text-xs sm:text-sm text-gray-300">Pasillo {currentTarget.product.aisle}</p>
-                <p className="text-xs sm:text-sm text-gray-300">Precio: {currentTarget.product.price.toFixed(2)}€</p>
+              <div className="bg-yellow-900 p-2 sm:p-3 rounded-lg">
+                <h3 className="text-xs sm:text-sm font-bold mb-1 sm:mb-1.5">🎯 Objetivo Actual:</h3>
+                <p className="text-sm sm:text-base">{currentTarget.product.name}</p>
+                <p className="text-[10px] sm:text-xs text-gray-300">Pasillo {currentTarget.product.aisle}</p>
+                <p className="text-[10px] sm:text-xs text-gray-300">Precio: {currentTarget.product.price.toFixed(2)}€</p>
                 {path && (
-                  <p className="text-[10px] sm:text-xs text-gray-400 mt-1.5 sm:mt-2">
+                  <p className="text-[9px] sm:text-[10px] text-gray-400 mt-1">
                     Distancia: {path.length - 1} pasos
                   </p>
                 )}
@@ -430,12 +430,12 @@ export default function Home() {
 
             {/* Checkout Mode */}
             {gameMode === 'checkout' && (
-              <div className="bg-green-900 p-3 sm:p-4 rounded-lg">
-                <h3 className="text-sm sm:text-base font-bold mb-1.5 sm:mb-2">💰 Ir a Caja</h3>
-                <p className="text-base sm:text-lg">Dirígete a la caja para pagar</p>
-                <p className="text-xs sm:text-sm text-gray-300 mt-1.5 sm:mt-2">Total: {totalPrice.toFixed(2)}€</p>
+              <div className="bg-green-900 p-2 sm:p-3 rounded-lg">
+                <h3 className="text-xs sm:text-sm font-bold mb-1 sm:mb-1.5">💰 Ir a Caja</h3>
+                <p className="text-sm sm:text-base">Dirígete a la caja para pagar</p>
+                <p className="text-[10px] sm:text-xs text-gray-300 mt-1">Total: {totalPrice.toFixed(2)}€</p>
                 {path && (
-                  <p className="text-[10px] sm:text-xs text-gray-400 mt-1.5 sm:mt-2">
+                  <p className="text-[9px] sm:text-[10px] text-gray-400 mt-1">
                     Distancia: {path.length - 1} pasos
                   </p>
                 )}
@@ -444,9 +444,9 @@ export default function Home() {
 
             {/* Controls Info */}
             {(gameMode === 'shopping' || gameMode === 'checkout') && (
-              <div className="bg-gray-800 p-3 sm:p-4 rounded-lg text-xs sm:text-sm">
-                <h3 className="text-sm sm:text-base font-bold mb-1.5 sm:mb-2">🎮 Controles:</h3>
-                <ul className="space-y-0.5 sm:space-y-1 text-gray-300">
+              <div className="bg-gray-800 p-2 sm:p-3 rounded-lg text-[10px] sm:text-xs">
+                <h3 className="text-xs sm:text-sm font-bold mb-1 sm:mb-1.5">🎮 Controles:</h3>
+                <ul className="space-y-0.5 text-gray-300">
                   <li className="hidden sm:block">⬆️ Arriba: ↑ o W</li>
                   <li className="hidden sm:block">⬇️ Abajo: ↓ o S</li>
                   <li className="hidden sm:block">⬅️ Izquierda: ← o A</li>
@@ -478,12 +478,12 @@ export default function Home() {
             
             {/* Mobile D-Pad Controls */}
             {(gameMode === 'shopping' || gameMode === 'checkout') && (
-              <div className="lg:hidden fixed bottom-4 right-4 z-40">
-                <div className="relative w-32 h-32 bg-gray-800 bg-opacity-90 rounded-full shadow-2xl">
+              <div className="lg:hidden fixed bottom-2 right-2 z-40">
+                <div className="relative w-28 h-28 sm:w-32 sm:h-32 bg-gray-800 bg-opacity-90 rounded-full shadow-2xl">
                   {/* Up */}
                   <button
                     onClick={() => movePlayer(0, -1)}
-                    className="absolute top-0 left-1/2 -translate-x-1/2 w-12 h-12 bg-blue-600 hover:bg-blue-700 active:bg-blue-800 rounded-full flex items-center justify-center text-xl font-bold shadow-lg"
+                    className="absolute top-0 left-1/2 -translate-x-1/2 w-10 h-10 sm:w-11 sm:h-11 bg-blue-600 hover:bg-blue-700 active:bg-blue-800 rounded-full flex items-center justify-center text-lg sm:text-xl font-bold shadow-lg"
                   >
                     ↑
                   </button>
@@ -491,7 +491,7 @@ export default function Home() {
                   {/* Down */}
                   <button
                     onClick={() => movePlayer(0, 1)}
-                    className="absolute bottom-0 left-1/2 -translate-x-1/2 w-12 h-12 bg-blue-600 hover:bg-blue-700 active:bg-blue-800 rounded-full flex items-center justify-center text-xl font-bold shadow-lg"
+                    className="absolute bottom-0 left-1/2 -translate-x-1/2 w-10 h-10 sm:w-11 sm:h-11 bg-blue-600 hover:bg-blue-700 active:bg-blue-800 rounded-full flex items-center justify-center text-lg sm:text-xl font-bold shadow-lg"
                   >
                     ↓
                   </button>
@@ -499,7 +499,7 @@ export default function Home() {
                   {/* Left */}
                   <button
                     onClick={() => movePlayer(-1, 0)}
-                    className="absolute left-0 top-1/2 -translate-y-1/2 w-12 h-12 bg-blue-600 hover:bg-blue-700 active:bg-blue-800 rounded-full flex items-center justify-center text-xl font-bold shadow-lg"
+                    className="absolute left-0 top-1/2 -translate-y-1/2 w-10 h-10 sm:w-11 sm:h-11 bg-blue-600 hover:bg-blue-700 active:bg-blue-800 rounded-full flex items-center justify-center text-lg sm:text-xl font-bold shadow-lg"
                   >
                     ←
                   </button>
@@ -507,13 +507,13 @@ export default function Home() {
                   {/* Right */}
                   <button
                     onClick={() => movePlayer(1, 0)}
-                    className="absolute right-0 top-1/2 -translate-y-1/2 w-12 h-12 bg-blue-600 hover:bg-blue-700 active:bg-blue-800 rounded-full flex items-center justify-center text-xl font-bold shadow-lg"
+                    className="absolute right-0 top-1/2 -translate-y-1/2 w-10 h-10 sm:w-11 sm:h-11 bg-blue-600 hover:bg-blue-700 active:bg-blue-800 rounded-full flex items-center justify-center text-lg sm:text-xl font-bold shadow-lg"
                   >
                     →
                   </button>
                   
                   {/* Center dot */}
-                  <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-8 h-8 bg-gray-700 rounded-full"></div>
+                  <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-7 h-7 sm:w-8 sm:h-8 bg-gray-700 rounded-full"></div>
                 </div>
               </div>
             )}
