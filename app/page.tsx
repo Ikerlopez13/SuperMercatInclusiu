@@ -10,7 +10,6 @@ import { findPath, getNextDirection, getDirectionText } from '@/utils/pathfindin
 import { ProximitySoundSystem } from '@/utils/proximitySound';
 import { SupermarketGrid } from '@/components/SupermarketGrid';
 import { CHECKOUT_POSITION } from '@/utils/gridGenerator';
-import { InstagramFollowPopup } from '@/components/InstagramFollowPopup';
 
 export default function Home() {
   // Generar distribución aleatoria de productos al iniciar
@@ -25,7 +24,6 @@ export default function Home() {
   const [isNavigating, setIsNavigating] = useState(false);
   const [gameMode, setGameMode] = useState<'setup' | 'shopping' | 'checkout'>('setup');
   const [totalPrice, setTotalPrice] = useState(0);
-  const [showInstagramPopup, setShowInstagramPopup] = useState(false);
 
   const { 
     transcript, 
@@ -47,23 +45,6 @@ export default function Home() {
       if (proximitySystemRef.current) {
         proximitySystemRef.current.destroy();
       }
-    };
-  }, []);
-
-  // Instagram popup cada 10 segundos 💕
-  useEffect(() => {
-    // Mostrar el popup inmediatamente al cargar
-    const showPopup = () => setShowInstagramPopup(true);
-    
-    // Primer popup después de 3 segundos
-    const initialTimeout = setTimeout(showPopup, 3000);
-    
-    // Luego cada 10 segundos
-    const interval = setInterval(showPopup, 10000);
-    
-    return () => {
-      clearTimeout(initialTimeout);
-      clearInterval(interval);
     };
   }, []);
 
@@ -291,12 +272,6 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-gray-900 text-white p-1 sm:p-3 md:p-4 pb-20 sm:pb-4">
-      {/* Instagram Follow Popup */}
-      <InstagramFollowPopup 
-        show={showInstagramPopup} 
-        onClose={() => setShowInstagramPopup(false)} 
-      />
-      
       <div className="max-w-7xl mx-auto">
         <header className="text-center mb-2 sm:mb-4 md:mb-6">
           <h1 className="text-lg sm:text-2xl md:text-3xl lg:text-4xl font-bold mb-0.5 sm:mb-1 md:mb-2">🛒 SuperMercat Inclusiu</h1>
